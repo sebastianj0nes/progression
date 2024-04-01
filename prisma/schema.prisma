@@ -1,0 +1,16 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
+}
+
+model Entry {
+  id    Int    @id @default(autoincrement())
+  name  String
+  date String
+  feelings String
+  goals String
+  accomplishments String
+  score String
+}
+

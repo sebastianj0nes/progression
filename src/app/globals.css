@@ -2,6 +2,7 @@
     border: 2px black solid;
     border-radius: 20px;
     height: 10vh;
+    cursor: pointer;
 }
 
 
