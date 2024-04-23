@@ -25,7 +25,7 @@ export const authConfig = {
                 // If the URL does not require authentication or is a public route
                 if (isLoggedIn && nextUrl.pathname === '/login') {
                     // Redirect authenticated users away from the login page
-                    return Response.redirect(new URL('/', nextUrl));
+                    return Response.redirect(new URL('/landing', nextUrl));
                 } else {
                     // Allow access to public routes regardless of authentication status
                     return true;
