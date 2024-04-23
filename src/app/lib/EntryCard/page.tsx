@@ -1,7 +1,8 @@
+'use client';
 import {Card, Col, Container, Row} from "react-bootstrap";
 
 
-export default function EntryCard () {
+function EntryCard () {
 
     return(
         <Container>
@@ -30,3 +31,4 @@ export default function EntryCard () {
     )
 }
 
+export default EntryCard;
