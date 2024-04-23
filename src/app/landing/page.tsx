@@ -2,7 +2,8 @@
 import  {Col, Container, Row} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css';
 import "@/app/globals.css";
-import Calendar from "@/app/lib/Calendar/page";
+
+import EntryCard from "@/app/lib/EntryCard/page";
 
 export default function Home() {
 
@@ -29,7 +30,19 @@ export default function Home() {
             <Row>
                 <Col xs={2}></Col>
                 <Col xs={8}>
-                    <Calendar/>
+                    <h2> Some recent entries</h2>
+                    <Row>
+                        <Col xs={4}>
+                            <EntryCard/>
+                        </Col>
+                        <Col xs={4}>
+                            <EntryCard/>
+                        </Col>
+                        <Col xs={4}>
+                            <EntryCard/>
+                        </Col>
+
+                    </Row>
                 </Col>
                 <Col xs={2}></Col>
 

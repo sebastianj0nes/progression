@@ -3,11 +3,9 @@
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import { User } from "./definitions";
-import  getUser  from "@/auth";
 import bcrypt from 'bcrypt';
 
 
@@ -25,7 +23,8 @@ const SignupSchema = z.object({
     id: z.string(),
     name : z.string(),
     email : z.string(),
-    password : z.string()
+    password : z.string(),
+    signupDate : z.string()
 })
 
 const CreateEntry = FormSchema.omit({ id: true});
@@ -79,6 +78,7 @@ export async function signUpUser(userData: FormData){
         name : userData.get("name"),
         email : userData.get("email"),
         password : userData.get("password"),
+        signupDate : Date.toString()
     })
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -87,8 +87,8 @@ export async function signUpUser(userData: FormData){
     // Before signing up a user ensure that user doesn't already exist
     const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
 
-    const numUsers = await sql<User>`SELECT * FROM users`;
-    let newID = numUsers.rowCount;
+    const date = new Date();
+    const currentDate = date.toDateString();
 
     if (user.rows.length >= 1){
         console.log("User already exists!");
@@ -96,8 +96,8 @@ export async function signUpUser(userData: FormData){
     } else {
         console.log("User can be signed up");
         try{
-            await sql<User>`INSERT INTO users (PersonID, Name, Email, Password) VALUES (${newID++}, ${name}, ${email}, ${hashedPassword})`;
-            console.log(`Inserting ${newID}, ${name}, ${email}, ${password} into DB as a new user`);
+            await sql<User>`INSERT INTO users (name, email, password, signup_date) VALUES (${name}, ${email}, ${hashedPassword}, ${currentDate})`;
+            console.log(`Inserting ${name}, ${email}, ${password} into DB as a new user`);
         }
         catch (error) {
             console.log(error)
